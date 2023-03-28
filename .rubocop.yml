@@ -1,0 +1,29 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'bin/bundle'
+
+Style/Documentation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Exclude:
+    - 'bin/bundle'
+
+Layout/LineLength:
+  Exclude:
+    - 'bin/bundle'
+  Max: 115
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'bin/bundle'

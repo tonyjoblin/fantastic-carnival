@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -28,5 +30,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_022816) do
     t.index ["guest_id"], name: "index_phones_on_guest_id"
   end
 
-  add_foreign_key "phones", "guests"
+  add_foreign_key 'phones', 'guests'
 end

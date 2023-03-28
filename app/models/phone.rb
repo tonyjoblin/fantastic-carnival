@@ -1,5 +1,7 @@
-class Phone < ApplicationRecord
-  belongs_to :guest
+# frozen_string_literal: true
 
-  validates :guest, :number, presence: true
+class Phone < ApplicationRecord
+  belongs_to :guest, dependent: :destroy
+
+  validates :number, presence: true
 end
