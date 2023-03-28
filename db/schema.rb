@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_28_015013) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_28_022816) do
   create_table "guests", force: :cascade do |t|
-    t.string "email"
-    t.string "first_name"
-    t.string "last_name"
+    t.string "email", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_guests_on_email", unique: true
   end
 
+  create_table "phones", force: :cascade do |t|
+    t.string "number", null: false
+    t.integer "guest_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_phones_on_guest_id"
+  end
+
+  add_foreign_key "phones", "guests"
 end

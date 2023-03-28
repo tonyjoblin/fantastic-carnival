@@ -30,4 +30,13 @@ class GuestTest < ActiveSupport::TestCase
     assert new_guest.invalid?, "You cannot add another guest with email steve@gmail.com"
     assert new_guest.errors[:email].any?
   end
+
+  test "guests can have phone numbers" do
+    steve = guests(:steve)
+
+    steve.phones.create number: '38781234'
+
+    assert steve.valid?
+    assert_equal ['MyString', '38781234'], steve.phones.pluck(:number)
+  end
 end
