@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: XYZ123
+  start_date: 2023-03-28
+  end_date: 2023-04-05
+  nights: 1
+  guests: 1
+  adults: 1
+  children: 1
+  infants: 1
+  status: accepted
+  currency: AUD
+  security_deposit: 9.99
+  payout_amount: 9.99
+  total_paid: 9.99
+  guest: steve
+
+two:
+  code: ABC567
+  start_date: 2023-03-28
+  end_date: 2023-03-28
+  nights: 1
+  guests: 1
+  adults: 1
+  children: 1
+  infants: 1
+  status: cancelled
+  currency: NZD
+  security_deposit: 9.99
+  payout_amount: 9.99
+  total_paid: 9.99
+  guest: jane

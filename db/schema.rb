@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_28_022816) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_28_231022) do
   create_table "guests", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name", null: false
@@ -30,5 +28,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_022816) do
     t.index ["guest_id"], name: "index_phones_on_guest_id"
   end
 
-  add_foreign_key 'phones', 'guests'
+  create_table "reservations", force: :cascade do |t|
+    t.string "code", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.integer "nights"
+    t.integer "guests"
+    t.integer "adults"
+    t.integer "children"
+    t.integer "infants"
+    t.string "status"
+    t.string "currency", limit: 3
+    t.decimal "security_deposit", precision: 10, scale: 2
+    t.decimal "payout_amount", precision: 10, scale: 2
+    t.decimal "total_paid", precision: 10, scale: 2
+    t.integer "guest_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_reservations_on_code", unique: true
+    t.index ["guest_id"], name: "index_reservations_on_guest_id"
+    t.index ["start_date"], name: "index_reservations_on_start_date"
+    t.index ["status"], name: "index_reservations_on_status"
+  end
+
+  add_foreign_key "phones", "guests"
+  add_foreign_key "reservations", "guests"
 end
