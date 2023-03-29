@@ -9,7 +9,9 @@
   "infants": 0,
   "status": "accepted",
   "guest": {
-     "email": "steve@gmail.com"
+     "email": "steve@gmail.com",
+     "first_name": "Steve",
+     "last_name": "Smith"
   },
   "currency": "AUD",
   "payout_price": "4200.00",

@@ -15,8 +15,12 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
-    reservation = Reservations::XyzReservationService.new.build_or_update(reservation_params.to_hash)
-    render json: @reservation, status: :created, location: @reservation
+    if Reservations::XyzReservationService.new.accepts?(reservation_params.to_hash)
+      @reservation = Reservations::XyzReservationService.new.build_or_update(reservation_params.to_hash)
+      render json: @reservation, status: :created, location: @reservation
+    else
+      render json: { errors: "TODO" }, status: :unprocessable_entity
+    end
 
     # @reservation = Reservation.new(reservation_params)
 

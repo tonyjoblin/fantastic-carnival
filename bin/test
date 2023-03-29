@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'fileutils'
+
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
+
+URL = 'http://localhost:3000/reservations'
+TEST_CASE_FOLDER = './test/fixtures/files/reservations'
+OUTPUT_FOLDER = './tmp'
+
+def help
+  puts <<~TEXT
+    This script tests the api by sending reservation requests
+    to the endpoint using cURL.
+    - The requests are located in #{TEST_CASE_FOLDER}
+    - Responses are written to #{OUTPUT_FOLDER} with _response appended to the file name
+    these paths are relative to APP_ROOT
+    At the moment you need to manually add test cases to the array below.
+  TEXT
+end
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+help
+
+FileUtils.chdir APP_ROOT do
+  # TODO: automatically read test cases from the folder
+  # file names without the .json extension
+  test_cases = %w[
+    xyz_reservation_payload
+    abc_reservation_payload
+    xyz_new_reservation_for_mary
+    xyz_new_reservation_for_steve
+    xyz_updated_reservation_for_steve
+  ]
+  test_cases.each do |test_case|
+    request_payload = "#{TEST_CASE_FOLDER}/#{test_case}.json"
+    output_file = "#{OUTPUT_FOLDER}/#{test_case}_response.json"
+    puts "== Sending #{request_payload} =="
+    puts "== Saving to #{output_file} =="
+    system!("curl -X POST -H 'Content-Type: application/json' -d @#{request_payload} #{URL} > #{output_file}")
+  end
+end
