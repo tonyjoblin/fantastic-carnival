@@ -15,6 +15,7 @@ one:
   payout_amount: 9.99
   total_paid: 9.99
   guest: steve
+  source: xyz
 
 two:
   code: ABC567
@@ -31,3 +32,4 @@ two:
   payout_amount: 9.99
   total_paid: 9.99
   guest: jane
+  source: abc

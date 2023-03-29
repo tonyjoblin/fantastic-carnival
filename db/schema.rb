@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_28_231022) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_29_045047) do
   create_table "guests", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_231022) do
     t.integer "guest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source", null: false
     t.index ["code"], name: "index_reservations_on_code", unique: true
     t.index ["guest_id"], name: "index_reservations_on_guest_id"
     t.index ["start_date"], name: "index_reservations_on_start_date"

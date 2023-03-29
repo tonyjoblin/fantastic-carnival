@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+
+  reservations:
+    validations:
+      bad_data_source: '%{value} is not a recognized data source'

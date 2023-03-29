@@ -20,7 +20,7 @@ module Reservations
       reservation = Reservation.find_or_initialize_by(code: payload['reservation_code'])
       guest = Reservations::XyzGuestService.new.build_or_update(payload['guest'])
       reservation.update(
-        payload.slice('start_date', 'end_date').merge('guest' => guest)
+        payload.slice('start_date', 'end_date').merge('guest' => guest, 'source' => 'xyz')
       )
       # TODO: nights
       # TODO: guests

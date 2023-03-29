@@ -5,4 +5,6 @@ class Reservation < ApplicationRecord
 
   validates :code, :start_date, :end_date, presence: true
   validates :code, uniqueness: true
+  validates :source, presence: true,
+                     inclusion: { in: %w[xyz abc], message: I18n.t('reservations.validations.bad_data_source') }
 end
