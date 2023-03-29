@@ -1,13 +1,15 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class ReservationTest < ActiveSupport::TestCase
-  test "validates that required fields are present" do
+  test 'validates that required fields are present' do
     reservation = Reservation.new
 
     assert reservation.invalid?
-    assert reservation.errors[:code].any?, "A reservation must have a code"
-    assert reservation.errors[:start_date].any?, "Must have a start date"
-    assert reservation.errors[:end_date].any?, "Must have an end date"
+    assert reservation.errors[:code].any?, 'A reservation must have a code'
+    assert reservation.errors[:start_date].any?, 'Must have a start date'
+    assert reservation.errors[:end_date].any?, 'Must have an end date'
     assert reservation.errors[:guest].any?
 
     steve = guests(:steve)

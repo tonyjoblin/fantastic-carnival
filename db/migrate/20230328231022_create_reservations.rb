@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class CreateReservations < ActiveRecord::Migration[7.0]
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def change
     create_table :reservations do |t|
       t.string :code, null: false
@@ -22,4 +25,5 @@ class CreateReservations < ActiveRecord::Migration[7.0]
     add_index :reservations, :start_date
     add_index :reservations, :status
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end
