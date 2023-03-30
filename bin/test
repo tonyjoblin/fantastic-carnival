@@ -36,6 +36,9 @@ FileUtils.chdir APP_ROOT do
     xyz_new_reservation_for_mary
     xyz_new_reservation_for_steve
     xyz_updated_reservation_for_steve
+    abc_new_reservation_for_steve
+    abc_new_reservation_for_karen
+    abc_updated_reservation_for_steve
   ]
   test_cases.each do |test_case|
     request_payload = "#{TEST_CASE_FOLDER}/#{test_case}.json"

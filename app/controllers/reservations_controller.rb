@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ReservationsController < ApplicationController
   wrap_parameters false
-  before_action :set_reservation, only: %i[ show ]
+  before_action :set_reservation, only: %i[show]
 
   # GET /reservations
   # def index
@@ -19,7 +21,7 @@ class ReservationsController < ApplicationController
       @reservation = Reservations::XyzReservationService.new.build_or_update(reservation_params.to_hash)
       render json: @reservation, status: :created, location: @reservation
     else
-      render json: { errors: "TODO" }, status: :unprocessable_entity
+      render json: { errors: 'TODO' }, status: :unprocessable_entity
     end
 
     # @reservation = Reservation.new(reservation_params)
@@ -45,12 +47,13 @@ class ReservationsController < ApplicationController
   # should rather update a reservation and set status to cancelled?
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
 
-    def reservation_params
-      params.permit!
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def reservation_params
+    params.permit!
+  end
 end

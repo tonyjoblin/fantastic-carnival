@@ -1,0 +1,27 @@
+{
+  "reservation": {
+    "code": "XXXforsteve",
+    "start_date": "2021-03-12",
+    "end_date": "2021-03-18",
+    "expected_payout_amount": "4600.00",
+    "guest_details": {
+      "localized_description": "4 guests",
+      "number_of_adults": 2,
+      "number_of_children": 1,
+      "number_of_infants": 1
+    },
+    "guest_email": "steve@gmail.com",
+    "guest_first_name": "Steve",
+    "guest_last_name": "Smith",
+    "guest_phone_numbers": [
+      "639123456789",
+      "639123456789"
+    ],
+    "listing_security_price_accurate": "500.00",
+    "host_currency": "AUD",
+    "nights": 6,
+    "number_of_guests": 4,
+    "status_type": "accepted",
+    "total_paid_amount_accurate": "5140.00"
+  }
+}

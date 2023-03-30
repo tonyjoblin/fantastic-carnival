@@ -2,17 +2,17 @@
   "reservation_code": "XYZ12345678",
   "start_date": "2021-04-13",
   "end_date": "2021-04-19",
-  "nights": 4,
-  "guests": 1,
+  "nights": 6,
+  "guests": 3,
   "adults": 1,
-  "children": 0,
-  "infants": 0,
-  "status": "accepted",
+  "children": 1,
+  "infants": 1,
+  "status": "paid",
   "guest": {
      "email": "steve@gmail.com"
   },
   "currency": "AUD",
-  "payout_price": "4200.00",
+  "payout_price": "4450.00",
   "security_price": "500",
   "total_price": "4700.00"
 }

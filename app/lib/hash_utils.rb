@@ -7,21 +7,16 @@ module HashUtils
   # Example
   # h = { }
   # undig(h, 'a', 'b', 5) => { 'a' => { 'b' => 5 } }
-  def self.undig(h, *keys, value)
-    keys.reduce(h) do |acc, key|
-      if key == keys.last
-        acc[key] = value
-        h
-      else
-        acc[key] = {}
-        acc[key]
-      end
+  def self.undig(hash, *keys, value)
+    keys.reduce(hash) do |acc, key|
+      acc[key] = key == keys.last ? value : {}
+      acc[key]
     end
-    h
+    hash
   end
 
   # Returns a new hash. Transforms keys in the original hash
-  # using a white list. 
+  # using a white list.
   # hsh may also be a ActionController::Parameters instance
   # transform looks like
   # {
@@ -35,8 +30,10 @@ module HashUtils
     result = {}
     transform_keys_whitelist.each do |input_path, output_path|
       value = hsh.dig(*input_path.split('.'))
-      next unless value.present?
-      undig(result, *output_path.split('.'), value.is_a?(ActionController::Parameters) ? value.permit!.to_h : value)
+      next if value.blank?
+
+      undig(result, *output_path.split('.'),
+            value.is_a?(ActionController::Parameters) ? value.permit!.to_h : value)
     end
     result
   end
@@ -44,17 +41,16 @@ module HashUtils
   # returns true if the hash has all the keys
   # keys can be deeply nested
   # a key can be like 'a', 'a.b'
-  def self.has_keys?(params, keys)
-    keys.map { |key| has_key?(params, key) }.all?
+  def self.keys?(params, keys)
+    keys.map { |key| key?(params, key) }.all?
   end
 
   # returns true if the hash has the key
   # the key can be deeply nested
   # a key can be like 'a', 'a.b'
-  def self.has_key?(params, key)
+  def self.key?(params, key)
     params.dig(*key.split('.')).present?
-  rescue
+  rescue StandardError
     false
   end
-
 end
