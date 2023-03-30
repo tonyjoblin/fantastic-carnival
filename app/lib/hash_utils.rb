@@ -18,6 +18,8 @@ module HashUtils
   # Returns a new hash. Transforms keys in the original hash
   # using a white list.
   # hsh may also be a ActionController::Parameters instance
+  # This is similar to transform_keys in ActionController::Parameter except
+  # it can handle arbitrary nesting on both the input key and output key.
   # transform looks like
   # {
   #   "reservation.code" => "code",
@@ -25,7 +27,11 @@ module HashUtils
   #   "reservation.end_date" => "end_date",
   #   "reservation.guest_details" => "guest_details"
   # }
-  # TODO: doesn't handle moving to root level
+  #
+  # Transform can also be an array of key pairs like this
+  # [
+  #   ['a', 'b']
+  # ]
   def self.transform_hash(hsh, transform_keys_whitelist)
     result = {}
     transform_keys_whitelist.each do |input_path, output_path|

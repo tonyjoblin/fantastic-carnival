@@ -12,6 +12,14 @@ class TransformHashTest < ActiveSupport::TestCase
     assert_equal({ 'b' => 5 }, HashUtils.transform_hash(original_hash, { 'a' => 'b' }))
   end
 
+  test 'the transform parameter can be an array of key value pair' do
+    original_hash = {
+      'a' => 5
+    }
+
+    assert_equal({ 'b' => 5 }, HashUtils.transform_hash(original_hash, [%w[a b]]))
+  end
+
   test 'ignores anything that is not in the white list' do
     original_hash = {
       'a' => 5,
