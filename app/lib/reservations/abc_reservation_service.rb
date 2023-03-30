@@ -15,7 +15,6 @@ module Reservations
       'reservation.start_date' => 'start_date',
       'reservation.end_date' => 'end_date',
       'reservation.nights' => 'nights',
-      # 'guests' => 'guests', # TODO: this needs to be calculated?
       'reservation.guest_details.number_of_adults' => 'adults',
       'reservation.guest_details.number_of_children' => 'children',
       'reservation.guest_details.number_of_infants' => 'infants',

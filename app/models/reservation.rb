@@ -3,8 +3,16 @@
 class Reservation < ApplicationRecord
   belongs_to :guest, dependent: :destroy
 
-  validates :code, :start_date, :end_date, presence: true
+  before_save :sets_guest_count
+
+  validates :code, :start_date, :end_date, :source, presence: true
   validates :code, uniqueness: true
-  validates :source, presence: true,
-                     inclusion: { in: %w[xyz abc], message: I18n.t('reservations.validations.bad_data_source') }
+
+  private
+
+  def sets_guest_count
+    if guests.blank? && (adults.present? || children.present? || infants.present?)
+      self.guests = (adults || 0) + (children || 0) + (infants || 0)
+    end
+  end
 end

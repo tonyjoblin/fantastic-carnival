@@ -22,4 +22,19 @@ class ReservationTest < ActiveSupport::TestCase
 
     assert reservation.valid?, 'Must be valid'
   end
+
+  test "sets guest count before save if not set" do
+    steve = guests(:steve)
+
+    reservation = Reservation.create(
+      code: 'XYZsteve',
+      start_date: '2023-04-02',
+      end_date: '2023-04-06',
+      adults: '2',
+      guest: steve,
+      source: 'xyz'
+    )
+
+    assert_equal 2, reservation.guests
+  end
 end
