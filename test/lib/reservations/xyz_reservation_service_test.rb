@@ -109,7 +109,4 @@ class XyzReservationServiceTest < ActiveSupport::TestCase
       assert_equal guests(:steve).id, reservation.guest.id, 'Has the correct guest'
     end
   end
-
-  # TODO: if field is not present an existing value should not be erased
-  # TODO: test phone number handling
 end

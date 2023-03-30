@@ -20,6 +20,7 @@ module Reservations
       reservation_params = HashUtils.transform_hash(payload, @reservation_transform)
       reservation = Reservation.find_or_initialize_by(code: reservation_params['code'])
       guest = build_or_update_guest(payload)
+      guest = reservation.guest if guest.nil? # payload didn't specify guest, could be an update
       reservation.update(
         reservation_params.merge('guest' => guest, 'source' => @service_code)
       )
@@ -30,6 +31,7 @@ module Reservations
 
     def build_or_update_guest(payload)
       guest_params = HashUtils.transform_hash(payload, @guest_transform)
+      return nil unless guest_params.key? 'email'
       transform_guest_phone_numbers(guest_params)
       guest = Guest.find_or_initialize_by(email: guest_params['email'])
       guest.update(guest_params)
