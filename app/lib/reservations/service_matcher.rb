@@ -6,6 +6,7 @@ module Reservations
       Reservations::XyzReservationService,
       Reservations::AbcReservationService
     ].freeze
+
     def self.service_for_payload(payload)
       RESERVATION_SERVICES.each do |service_klass|
         service = service_klass.new
