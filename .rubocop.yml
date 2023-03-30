@@ -27,3 +27,6 @@ Layout/LineLength:
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'bin/bundle'
+
+Style/WordArray:
+  Enabled: false

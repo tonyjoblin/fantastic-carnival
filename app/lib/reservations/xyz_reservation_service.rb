@@ -25,13 +25,14 @@ module Reservations
       'security_price' => 'security_deposit',
       'payout_price' => 'payout_amount',
       'total_price' => 'total_paid'
-    }
+    }.freeze
 
     GUEST_TRANSFORM = {
       'guest.email' => 'email',
       'guest.first_name' => 'first_name',
-      'guest.last_name' => 'last_name'
-    }
+      'guest.last_name' => 'last_name',
+      'guest.phone' => 'phones'
+    }.freeze
 
     SERVICE_CODE = 'xyz'
 

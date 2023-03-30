@@ -23,7 +23,6 @@ module Reservations
       reservation.update(
         reservation_params.merge('guest' => guest, 'source' => @service_code)
       )
-      # TODO: phone numbers
       reservation
     end
 
@@ -31,9 +30,20 @@ module Reservations
 
     def build_or_update_guest(payload)
       guest_params = HashUtils.transform_hash(payload, @guest_transform)
+      transform_guest_phone_numbers(guest_params)
       guest = Guest.find_or_initialize_by(email: guest_params['email'])
       guest.update(guest_params)
       guest
+    end
+
+    def transform_guest_phone_numbers(guest_params)
+      return unless guest_params.key?('phones')
+
+      if guest_params['phones'].is_a? Array
+        guest_params['phones'] = guest_params['phones'].map { |number| Phone.new(number:) }
+      elsif guest_params['phones'].is_a? String
+        guest_params['phones'] = [Phone.new(number: guest_params['phones'])]
+      end
     end
   end
 end

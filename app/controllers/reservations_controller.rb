@@ -28,14 +28,16 @@ class ReservationsController < ApplicationController
     @reservation = service.build_or_update(reservation_params.to_hash)
 
     if @reservation.valid?
-      render json: @reservation, status: :created, location: @reservation
+      render json: @reservation.to_json(include: { guest: { include: { phones: { only: [:number] } } } }),
+             status: :created, location: @reservation
     else
-      Rails.logger.error(
-        "Reservation processed with #{service.source_code} is invalid. " \
-        "Reservation: #{reservation_params.inspect}. Errors: #{@reservation.errors}"
-      )
+      log_reservation_invalid(@reservation, service.class)
       render json: @reservation.errors, status: :unprocessable_entity
     end
+
+  rescue StandardError => error
+    Rails.logger.error("#{error}, reservation parameters: #{reservation_params.to_hash}")
+    render json: "Failed to create the reservation #{error}", status: :unprocessable_entity
   end
   # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
@@ -53,6 +55,13 @@ class ReservationsController < ApplicationController
   # should rather update a reservation and set status to cancelled?
 
   private
+
+  def log_reservation_invalid(reservation, service_class)
+    Rails.logger.error(
+      "Reservation processed with #{service_class} is invalid. " \
+      "Reservation: #{reservation_params.to_hash}. Errors: #{reservation.errors}"
+    )
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_reservation

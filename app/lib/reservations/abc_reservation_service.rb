@@ -24,13 +24,14 @@ module Reservations
       'reservation.listing_security_price_accurate' => 'security_deposit',
       'reservation.expected_payout_amount' => 'payout_amount',
       'reservation.total_paid_amount_accurate' => 'total_paid'
-    }
+    }.freeze
 
     GUEST_TRANSFORM = {
       'reservation.guest_email' => 'email',
       'reservation.guest_first_name' => 'first_name',
-      'reservation.guest_last_name' => 'last_name'
-    }
+      'reservation.guest_last_name' => 'last_name',
+      'reservation.guest_phone_numbers' => 'phones'
+    }.freeze
 
     SERVICE_CODE = 'abc'
 
