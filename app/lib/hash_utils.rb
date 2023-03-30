@@ -41,4 +41,20 @@ module HashUtils
     result
   end
 
+  # returns true if the hash has all the keys
+  # keys can be deeply nested
+  # a key can be like 'a', 'a.b'
+  def self.has_keys?(params, keys)
+    keys.map { |key| has_key?(params, key) }.all?
+  end
+
+  # returns true if the hash has the key
+  # the key can be deeply nested
+  # a key can be like 'a', 'a.b'
+  def self.has_key?(params, key)
+    params.dig(*key.split('.')).present?
+  rescue
+    false
+  end
+
 end

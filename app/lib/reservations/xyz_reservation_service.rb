@@ -14,7 +14,7 @@ module Reservations
       ]
       # TODO: for a create we need guest first and last names, but
       # for updates we don't really need any of these
-      has_keys?(payload, required_keys)
+      HashUtils.has_keys?(payload, required_keys)
     end
 
     # payload is a hash
@@ -43,16 +43,6 @@ module Reservations
       )
       # TODO: phone numbers
       reservation
-    end
-
-    private
-
-    def has_keys?(params, keys)
-      keys.map { |key| has_key?(params, key) }.all?
-    end
-
-    def has_key?(params, key)
-      params.dig(*key.split('.')).present?
     end
   end
 end
