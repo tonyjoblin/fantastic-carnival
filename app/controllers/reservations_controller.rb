@@ -16,22 +16,28 @@ class ReservationsController < ApplicationController
   end
 
   # POST /reservations
+  # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
   def create
-    if Reservations::XyzReservationService.new.accepts?(reservation_params.to_hash)
-      @reservation = Reservations::XyzReservationService.new.build_or_update(reservation_params.to_hash)
-      render json: @reservation, status: :created, location: @reservation
-    else
-      render json: { errors: 'TODO' }, status: :unprocessable_entity
+    service = Reservations::ServiceMatcher.service_for_payload(reservation_params.to_hash)
+    if service.nil?
+      Rails.logger.error "Unknown reservation format #{reservation_params.inspect}"
+      render json: { errors: 'Reservation dose not match known format' }, status: :unprocessable_entity
+      return
     end
 
-    # @reservation = Reservation.new(reservation_params)
+    @reservation = service.build_or_update(reservation_params.to_hash)
 
-    # if @reservation.save
-    #   render json: @reservation, status: :created, location: @reservation
-    # else
-    #   render json: @reservation.errors, status: :unprocessable_entity
-    # end
+    if @reservation.valid?
+      render json: @reservation, status: :created, location: @reservation
+    else
+      Rails.logger.error(
+        "Reservation processed with #{service.source_code} is invalid. " \
+        "Reservation: #{reservation_params.inspect}. Errors: #{@reservation.errors}"
+      )
+      render json: @reservation.errors, status: :unprocessable_entity
+    end
   end
+  # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
   # PATCH/PUT /reservations/1
   # def update
