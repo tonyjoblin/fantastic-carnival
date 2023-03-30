@@ -4,32 +4,55 @@ module Reservations
   # Xyz would be replaced with the actual name of the data source
   # eg AirBnb etc
   class XyzReservationService
+    # payload can be Parameters or Hash
     def accepts?(payload)
-      # TODO: can we use dig here and also check guest.email?
       required_keys = %w[
         reservation_code
         start_date
         end_date
-        guest
+        guest.email
       ]
-      required_keys.map { |key| payload.key?(key) }.all?
+      # TODO: for a create we need guest first and last names, but
+      # for updates we don't really need any of these
+      has_keys?(payload, required_keys)
     end
 
     # payload is a hash
     def build_or_update(payload)
       reservation = Reservation.find_or_initialize_by(code: payload['reservation_code'])
       guest = Reservations::XyzGuestService.new.build_or_update(payload['guest'])
-      reservation.update(
-        payload.slice('start_date', 'end_date').merge('guest' => guest, 'source' => 'xyz')
+      reservation_params = HashUtils.transform_hash(
+        payload,
+        {
+          'start_date' => 'start_date',
+          'end_date' => 'end_date',
+          'nights' => 'nights',
+          'guests' => 'guests',
+          'adults' => 'adults',
+          'children' => 'children',
+          'infants' => 'infants',
+          'status' => 'status',
+          'currency' => 'currency',
+          'security_price' => 'security_deposit',
+          'payout_price' => 'payout_amount',
+          'total_price' => 'total_paid'
+        }
       )
-      # TODO: nights
-      # TODO: guests
-      # TODO: adults
-      # TODO: children
-      # TODO: infants
-      # TODO: currency
-      # TODO: prices
+      reservation.update(
+        reservation_params.merge('guest' => guest, 'source' => 'xyz')
+      )
+      # TODO: phone numbers
       reservation
+    end
+
+    private
+
+    def has_keys?(params, keys)
+      keys.map { |key| has_key?(params, key) }.all?
+    end
+
+    def has_key?(params, key)
+      params.dig(*key.split('.')).present?
     end
   end
 end

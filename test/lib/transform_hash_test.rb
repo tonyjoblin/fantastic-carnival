@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'transform_hash'
+require_relative '../../app/lib/hash_utils'
 
 class TransformHashTest < ActiveSupport::TestCase
   test "does simple key transformations" do
@@ -9,7 +9,7 @@ class TransformHashTest < ActiveSupport::TestCase
       'a' => 5
     }
 
-    assert_equal({ 'b' => 5 }, transform_hash(original_hash, { 'a' => 'b' }))
+    assert_equal({ 'b' => 5 }, HashUtils.transform_hash(original_hash, { 'a' => 'b' }))
   end
 
   test "ignores anything that is not in the white list" do
@@ -18,13 +18,13 @@ class TransformHashTest < ActiveSupport::TestCase
       'c' => 6
     }
 
-    assert_equal({ 'b' => 5 }, transform_hash(original_hash, { 'a' => 'b' }))
+    assert_equal({ 'b' => 5 }, HashUtils.transform_hash(original_hash, { 'a' => 'b' }))
   end
 
   test "if a key in the whitelist does not exist in the hash nothing is written to the output hash" do
     original_hash = {}
 
-    assert_equal({ }, transform_hash(original_hash, { 'a' => 'b' }))
+    assert_equal({ }, HashUtils.transform_hash(original_hash, { 'a' => 'b' }))
   end
 
   test "handles nested hashes" do
@@ -50,7 +50,7 @@ class TransformHashTest < ActiveSupport::TestCase
           'f' => 12
         } 
       },
-      transform_hash(original_hash, { 'a.b' => 'cat', 'c' => 'dog.pony', 'd'=> 'object' })
+      HashUtils.transform_hash(original_hash, { 'a.b' => 'cat', 'c' => 'dog.pony', 'd'=> 'object' })
     )
   end
 
@@ -91,7 +91,7 @@ class TransformHashTest < ActiveSupport::TestCase
         'code' => 'XXX12345678',
         'adults' => 2
       },
-      transform_hash(params, { 'reservation.code' => 'code', 'reservation.guest_details.number_of_adults' => 'adults' })
+      HashUtils.transform_hash(params, { 'reservation.code' => 'code', 'reservation.guest_details.number_of_adults' => 'adults' })
     )
   end
 end
