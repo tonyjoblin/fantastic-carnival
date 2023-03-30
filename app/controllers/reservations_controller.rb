@@ -65,7 +65,7 @@ class ReservationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_reservation
-    @reservation = Reservation.find(params[:id])
+    @reservation = Reservation.where("id = ? OR code = ?", params[:id], params[:id]).first!
   end
 
   def reservation_params

@@ -118,10 +118,20 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  # test "should show reservation" do
-  #   get reservation_url(@reservation), as: :json
-  #   assert_response :success
-  # end
+  test "should show reservation" do
+    one = reservations(:one)
+    get reservation_url(one), as: :json
+    assert_response :success
+  end
+
+  test "should show reservation use code as the id" do
+    get '/reservations/XYZ123', as: :json
+    assert_response :success
+  end
+
+  test "when not found show should return :not_found" do
+    assert_raises(ActiveRecord::RecordNotFound) { get '/reservations/not-found', as: :json }
+  end
 
   test 'should destroy reservation' do
     # not going to implement
